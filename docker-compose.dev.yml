@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: polaris_postgres_dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: polaris_youth_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - polaris_network
+
+  strapi:
+    build:
+      context: ./cms
+      dockerfile: Dockerfile.dev
+    container_name: polaris_cms_dev
+    restart: unless-stopped
+    environment:
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: polaris_youth_dev
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: postgres
+      NODE_ENV: development
+      STRAPI_HOST: 0.0.0.0
+      STRAPI_PORT: 1337
+      APP_KEYS: "key1,key2,key3,key4"
+      API_TOKEN_SALT: "apisalt"
+      ADMIN_JWT_SECRET: "adminsecret"
+      TRANSFER_TOKEN_SALT: "transfersalt"
+    ports:
+      - "1337:1337"
+    volumes:
+      - ./cms:/opt/app
+      - /opt/app/node_modules
+    depends_on:
+      - postgres
+    networks:
+      - polaris_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: polaris_frontend_dev
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_STRAPI_API_URL: http://localhost:1337/api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/opt/app
+      - /opt/app/node_modules
+      - /opt/app/.next
+    depends_on:
+      - strapi
+    networks:
+      - polaris_network
+
+volumes:
+  postgres_data:
+
+networks:
+  polaris_network:
+    driver: bridge

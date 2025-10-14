@@ -16,11 +16,6 @@
     "install:all": "npm install && cd frontend && npm install && cd ../cms && npm install",
     "clean": "rm -rf */node_modules */dist */.next"
   },
-  "workspaces": [
-    "frontend",
-    "cms",
-    "shared"
-  ],
   "devDependencies": {
     "concurrently": "^8.2.2"
   },

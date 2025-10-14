@@ -1,0 +1,32 @@
+{
+  "name": "polaris-youth-cms",
+  "version": "1.0.0",
+  "description": "Polaris Youth CMS built with Strapi",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "dependencies": {
+    "@strapi/strapi": "4.25.9",
+    "@strapi/plugin-users-permissions": "4.25.9",
+    "@strapi/plugin-i18n": "4.25.9",
+    "@strapi/plugin-upload": "4.25.9",
+    "better-sqlite3": "8.6.0",
+    "pg": "8.8.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "author": "Polaris Youth Development Center",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
+  }
+}
