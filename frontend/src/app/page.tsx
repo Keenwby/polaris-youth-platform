@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen p-8 md:p-24">
+    <main className="min-h-screen p-8 md:p-24 bg-background text-foreground">
+      <ThemeToggle />
       <div className="max-w-4xl mx-auto space-y-12">
         {/* Hero Section */}
         <section className="text-center space-y-6">

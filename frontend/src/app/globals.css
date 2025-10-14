@@ -6,220 +6,142 @@
  * Optimized for Chinese typography
  */
 
-/* ============================================
-   LIGHT MODE (Default)
-   ============================================ */
+/* Tailwind CSS v4 Theme Configuration */
 @theme {
-  /* Color Palette - Light Mode */
-  --color-background: 0 0% 100%;
-  --color-foreground: 220 20% 15%;
+  /* Colors - using hex values for Tailwind v4 */
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
 
-  --color-border: 220 15% 88%;
-  --color-input: 220 20% 75%;
-  --color-ring: 200 90% 55%;
+  --color-border: #e5e5e5;
+  --color-input: #d4d4d4;
+  --color-ring: #3b82f6;
 
   /* Card */
-  --color-card: 220 30% 98%;
-  --color-card-foreground: 220 20% 15%;
-  --color-card-border: 220 25% 93%;
+  --color-card: #fafafa;
+  --color-card-foreground: #1a1a1a;
 
   /* Popover */
-  --color-popover: 220 25% 94%;
-  --color-popover-foreground: 220 20% 15%;
-  --color-popover-border: 220 20% 89%;
+  --color-popover: #f5f5f5;
+  --color-popover-foreground: #1a1a1a;
 
   /* Primary - 活力蓝 */
-  --color-primary: 200 90% 55%;
-  --color-primary-foreground: 0 0% 100%;
+  --color-primary: #3b82f6;
+  --color-primary-foreground: #ffffff;
 
   /* Secondary */
-  --color-secondary: 220 18% 88%;
-  --color-secondary-foreground: 220 20% 15%;
+  --color-secondary: #f4f4f5;
+  --color-secondary-foreground: #1a1a1a;
 
   /* Muted */
-  --color-muted: 220 15% 92%;
-  --color-muted-foreground: 220 15% 45%;
+  --color-muted: #f5f5f5;
+  --color-muted-foreground: #737373;
 
   /* Accent */
-  --color-accent: 220 20% 90%;
-  --color-accent-foreground: 220 20% 15%;
+  --color-accent: #f4f4f5;
+  --color-accent-foreground: #1a1a1a;
 
   /* Destructive */
-  --color-destructive: 0 84% 48%;
-  --color-destructive-foreground: 0 0% 100%;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
 
   /* Chart Colors */
-  --color-chart-1: 200 90% 45%;
-  --color-chart-2: 280 65% 50%;
-  --color-chart-3: 150 75% 40%;
-  --color-chart-4: 35 100% 50%;
-  --color-chart-5: 260 70% 55%;
+  --color-chart-1: #3b82f6;
+  --color-chart-2: #8b5cf6;
+  --color-chart-3: #10b981;
+  --color-chart-4: #f59e0b;
+  --color-chart-5: #a855f7;
 
-  /* Border Radius */
-  --radius-lg: 0.5rem;     /* 8px */
-  --radius-md: 0.375rem;   /* 6px */
-  --radius-sm: 0.25rem;    /* 4px */
-
-  /* Font Families - Chinese Optimized */
-  --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Inter", "SF Pro Display", system-ui, sans-serif;
-  --font-serif: Georgia, "Songti SC", serif;
-  --font-mono: "SF Mono", Menlo, Monaco, "Courier New", monospace;
-
-  /* Elevation & Shadows */
-  --elevate-1: rgba(0, 0, 0, 0.03);
-  --elevate-2: rgba(0, 0, 0, 0.08);
+  /* Font Families */
+  --font-family-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Inter", "SF Pro Display", ui-sans-serif, system-ui, sans-serif;
+  --font-family-serif: Georgia, "Songti SC", ui-serif, serif;
+  --font-family-mono: "SF Mono", Menlo, Monaco, "Courier New", ui-monospace, monospace;
 }
+
 
 /* ============================================
-   DARK MODE
+   DARK MODE - CSS Variable Overrides
    ============================================ */
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-background: 220 15% 12%;
-    --color-foreground: 0 0% 98%;
-
-    --color-border: 220 15% 22%;
-    --color-input: 220 15% 35%;
-    --color-ring: 200 90% 55%;
-
-    /* Card */
-    --color-card: 220 15% 16%;
-    --color-card-foreground: 0 0% 98%;
-    --color-card-border: 220 15% 20%;
-
-    /* Popover */
-    --color-popover: 220 15% 18%;
-    --color-popover-foreground: 0 0% 98%;
-    --color-popover-border: 220 15% 25%;
-
-    /* Primary */
-    --color-primary: 200 90% 55%;
-    --color-primary-foreground: 0 0% 100%;
-
-    /* Secondary */
-    --color-secondary: 220 15% 25%;
-    --color-secondary-foreground: 0 0% 98%;
-
-    /* Muted */
-    --color-muted: 220 15% 20%;
-    --color-muted-foreground: 220 10% 70%;
-
-    /* Accent */
-    --color-accent: 220 15% 22%;
-    --color-accent-foreground: 0 0% 98%;
-
-    /* Destructive */
-    --color-destructive: 0 84% 58%;
-    --color-destructive-foreground: 0 0% 100%;
-
-    /* Elevation */
-    --elevate-1: rgba(255, 255, 255, 0.05);
-    --elevate-2: rgba(255, 255, 255, 0.10);
-  }
-}
-
-/* Force dark mode when .dark class is applied */
-:root.dark {
-  --color-background: 220 15% 12%;
-  --color-foreground: 0 0% 98%;
-
-  --color-border: 220 15% 22%;
-  --color-input: 220 15% 35%;
-  --color-ring: 200 90% 55%;
-
-  --color-card: 220 15% 16%;
-  --color-card-foreground: 0 0% 98%;
-  --color-card-border: 220 15% 20%;
-
-  --color-popover: 220 15% 18%;
-  --color-popover-foreground: 0 0% 98%;
-  --color-popover-border: 220 15% 25%;
-
-  --color-primary: 200 90% 55%;
-  --color-primary-foreground: 0 0% 100%;
-
-  --color-secondary: 220 15% 25%;
-  --color-secondary-foreground: 0 0% 98%;
-
-  --color-muted: 220 15% 20%;
-  --color-muted-foreground: 220 10% 70%;
-
-  --color-accent: 220 15% 22%;
-  --color-accent-foreground: 0 0% 98%;
-
-  --color-destructive: 0 84% 58%;
-  --color-destructive-foreground: 0 0% 100%;
-
-  --elevate-1: rgba(255, 255, 255, 0.05);
-  --elevate-2: rgba(255, 255, 255, 0.10);
+.dark {
+  --color-background: #0a0a0a;
+  --color-foreground: #fafafa;
+  --color-border: #262626;
+  --color-input: #404040;
+  --color-card: #171717;
+  --color-card-foreground: #fafafa;
+  --color-popover: #1a1a1a;
+  --color-popover-foreground: #fafafa;
+  --color-secondary: #262626;
+  --color-secondary-foreground: #fafafa;
+  --color-muted: #1a1a1a;
+  --color-muted-foreground: #a3a3a3;
+  --color-accent: #262626;
+  --color-accent-foreground: #fafafa;
 }
 
 /* ============================================
    BASE STYLES
    ============================================ */
-@layer base {
-  * {
-    @apply border-border;
-  }
+* {
+  border-color: var(--color-border);
+}
 
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
 
-  /* Chinese Typography Optimization */
-  html {
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+/* Chinese Typography Optimization */
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  /* Improved line height for Chinese text */
-  p, li, blockquote {
-    @apply leading-relaxed;
-  }
+/* Improved line height for Chinese text */
+p, li, blockquote {
+  line-height: 1.75;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
 }
 
 /* ============================================
    CUSTOM UTILITIES
    ============================================ */
-@layer utilities {
-  /* Elevation Effects */
-  .hover-elevate {
-    @apply transition-all duration-200;
-  }
+/* Elevation Effects */
+.hover-elevate {
+  transition: all 200ms;
+}
 
-  .hover-elevate:hover {
-    @apply shadow-lg;
-    background-color: color-mix(in srgb, currentColor 3%, transparent);
-  }
+.hover-elevate:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  background-color: color-mix(in srgb, currentColor 3%, transparent);
+}
 
-  .active-elevate-2:active {
-    background-color: color-mix(in srgb, currentColor 8%, transparent);
-  }
+.active-elevate-2:active {
+  background-color: color-mix(in srgb, currentColor 8%, transparent);
+}
 
-  /* Text Utilities */
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Text Utilities */
+.text-balance {
+  text-wrap: balance;
+}
 
-  /* Grid Pattern Background */
-  .bg-grid-pattern {
-    background-image:
-      linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
+/* Grid Pattern Background */
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
 
-  .dark .bg-grid-pattern {
-    background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  }
+.dark .bg-grid-pattern {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }
 
 /* ============================================
