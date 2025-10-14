@@ -1,0 +1,37 @@
+{
+  "name": "polaris-youth-platform",
+  "version": "1.0.0",
+  "description": "Polaris Youth Development Center - Complete platform with Next.js frontend and Strapi CMS",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:cms\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:cms": "cd cms && npm run develop",
+    "build": "npm run build:frontend && npm run build:cms",
+    "build:frontend": "cd frontend && npm run build",
+    "build:cms": "cd cms && npm run build",
+    "start": "concurrently \"npm run start:cms\" \"npm run start:frontend\"",
+    "start:frontend": "cd frontend && npm run start",
+    "start:cms": "cd cms && npm run start",
+    "install:all": "npm install && cd frontend && npm install && cd ../cms && npm install",
+    "clean": "rm -rf */node_modules */dist */.next"
+  },
+  "workspaces": [
+    "frontend",
+    "cms",
+    "shared"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [
+    "nextjs",
+    "strapi",
+    "cms",
+    "youth",
+    "development",
+    "platform"
+  ],
+  "author": "Polaris Youth Development Center",
+  "license": "MIT"
+}
