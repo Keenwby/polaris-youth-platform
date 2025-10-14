@@ -1,26 +1,254 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Polaris Youth Development Center - Design System
+ * Based on AIESEC-inspired visual language
+ * Optimized for Chinese typography
+ */
+
+/* ============================================
+   LIGHT MODE (Default)
+   ============================================ */
+@theme {
+  /* Color Palette - Light Mode */
+  --color-background: 0 0% 100%;
+  --color-foreground: 220 20% 15%;
+
+  --color-border: 220 15% 88%;
+  --color-input: 220 20% 75%;
+  --color-ring: 200 90% 55%;
+
+  /* Card */
+  --color-card: 220 30% 98%;
+  --color-card-foreground: 220 20% 15%;
+  --color-card-border: 220 25% 93%;
+
+  /* Popover */
+  --color-popover: 220 25% 94%;
+  --color-popover-foreground: 220 20% 15%;
+  --color-popover-border: 220 20% 89%;
+
+  /* Primary - 活力蓝 */
+  --color-primary: 200 90% 55%;
+  --color-primary-foreground: 0 0% 100%;
+
+  /* Secondary */
+  --color-secondary: 220 18% 88%;
+  --color-secondary-foreground: 220 20% 15%;
+
+  /* Muted */
+  --color-muted: 220 15% 92%;
+  --color-muted-foreground: 220 15% 45%;
+
+  /* Accent */
+  --color-accent: 220 20% 90%;
+  --color-accent-foreground: 220 20% 15%;
+
+  /* Destructive */
+  --color-destructive: 0 84% 48%;
+  --color-destructive-foreground: 0 0% 100%;
+
+  /* Chart Colors */
+  --color-chart-1: 200 90% 45%;
+  --color-chart-2: 280 65% 50%;
+  --color-chart-3: 150 75% 40%;
+  --color-chart-4: 35 100% 50%;
+  --color-chart-5: 260 70% 55%;
+
+  /* Border Radius */
+  --radius-lg: 0.5rem;     /* 8px */
+  --radius-md: 0.375rem;   /* 6px */
+  --radius-sm: 0.25rem;    /* 4px */
+
+  /* Font Families - Chinese Optimized */
+  --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Inter", "SF Pro Display", system-ui, sans-serif;
+  --font-serif: Georgia, "Songti SC", serif;
+  --font-mono: "SF Mono", Menlo, Monaco, "Courier New", monospace;
+
+  /* Elevation & Shadows */
+  --elevate-1: rgba(0, 0, 0, 0.03);
+  --elevate-2: rgba(0, 0, 0, 0.08);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* ============================================
+   DARK MODE
+   ============================================ */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @theme {
+    --color-background: 220 15% 12%;
+    --color-foreground: 0 0% 98%;
+
+    --color-border: 220 15% 22%;
+    --color-input: 220 15% 35%;
+    --color-ring: 200 90% 55%;
+
+    /* Card */
+    --color-card: 220 15% 16%;
+    --color-card-foreground: 0 0% 98%;
+    --color-card-border: 220 15% 20%;
+
+    /* Popover */
+    --color-popover: 220 15% 18%;
+    --color-popover-foreground: 0 0% 98%;
+    --color-popover-border: 220 15% 25%;
+
+    /* Primary */
+    --color-primary: 200 90% 55%;
+    --color-primary-foreground: 0 0% 100%;
+
+    /* Secondary */
+    --color-secondary: 220 15% 25%;
+    --color-secondary-foreground: 0 0% 98%;
+
+    /* Muted */
+    --color-muted: 220 15% 20%;
+    --color-muted-foreground: 220 10% 70%;
+
+    /* Accent */
+    --color-accent: 220 15% 22%;
+    --color-accent-foreground: 0 0% 98%;
+
+    /* Destructive */
+    --color-destructive: 0 84% 58%;
+    --color-destructive-foreground: 0 0% 100%;
+
+    /* Elevation */
+    --elevate-1: rgba(255, 255, 255, 0.05);
+    --elevate-2: rgba(255, 255, 255, 0.10);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Force dark mode when .dark class is applied */
+:root.dark {
+  --color-background: 220 15% 12%;
+  --color-foreground: 0 0% 98%;
+
+  --color-border: 220 15% 22%;
+  --color-input: 220 15% 35%;
+  --color-ring: 200 90% 55%;
+
+  --color-card: 220 15% 16%;
+  --color-card-foreground: 0 0% 98%;
+  --color-card-border: 220 15% 20%;
+
+  --color-popover: 220 15% 18%;
+  --color-popover-foreground: 0 0% 98%;
+  --color-popover-border: 220 15% 25%;
+
+  --color-primary: 200 90% 55%;
+  --color-primary-foreground: 0 0% 100%;
+
+  --color-secondary: 220 15% 25%;
+  --color-secondary-foreground: 0 0% 98%;
+
+  --color-muted: 220 15% 20%;
+  --color-muted-foreground: 220 10% 70%;
+
+  --color-accent: 220 15% 22%;
+  --color-accent-foreground: 0 0% 98%;
+
+  --color-destructive: 0 84% 58%;
+  --color-destructive-foreground: 0 0% 100%;
+
+  --elevate-1: rgba(255, 255, 255, 0.05);
+  --elevate-2: rgba(255, 255, 255, 0.10);
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Chinese Typography Optimization */
+  html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Improved line height for Chinese text */
+  p, li, blockquote {
+    @apply leading-relaxed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+/* ============================================
+   CUSTOM UTILITIES
+   ============================================ */
+@layer utilities {
+  /* Elevation Effects */
+  .hover-elevate {
+    @apply transition-all duration-200;
+  }
+
+  .hover-elevate:hover {
+    @apply shadow-lg;
+    background-color: color-mix(in srgb, currentColor 3%, transparent);
+  }
+
+  .active-elevate-2:active {
+    background-color: color-mix(in srgb, currentColor 8%, transparent);
+  }
+
+  /* Text Utilities */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Grid Pattern Background */
+  .bg-grid-pattern {
+    background-image:
+      linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .dark .bg-grid-pattern {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-slide-in-up {
+  animation: slide-in-up 0.4s ease-out;
 }
