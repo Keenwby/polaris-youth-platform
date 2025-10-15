@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_sections_image_gallery",
+  "info": {
+    "displayName": "Image Gallery",
+    "description": "Photo gallery section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "layout": {
+      "type": "enumeration",
+      "enum": ["masonry", "grid", "slider"],
+      "default": "grid"
+    },
+    "columns": {
+      "type": "integer",
+      "min": 2,
+      "max": 6,
+      "default": 3
+    },
+    "aspectRatio": {
+      "type": "enumeration",
+      "enum": ["square", "landscape", "portrait", "original"],
+      "default": "original"
+    }
+  }
+}

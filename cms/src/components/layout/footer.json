@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_layout_footer",
+  "info": {
+    "displayName": "Footer",
+    "description": "Website footer configuration"
+  },
+  "options": {},
+  "attributes": {
+    "copyrightText": {
+      "type": "string",
+      "default": "© 2025 北辰青年发展中心. All rights reserved."
+    },
+    "links": {
+      "type": "json",
+      "default": []
+    },
+    "socialLinks": {
+      "type": "json",
+      "default": []
+    },
+    "additionalInfo": {
+      "type": "richtext"
+    }
+  }
+}

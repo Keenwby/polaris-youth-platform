@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_sections_rich_text",
+  "info": {
+    "displayName": "Rich Text Section",
+    "description": "Section with rich text content"
+  },
+  "options": {},
+  "attributes": {
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "layout": {
+      "type": "enumeration",
+      "enum": ["narrow", "medium", "wide", "full"],
+      "default": "medium"
+    },
+    "backgroundColor": {
+      "type": "string"
+    }
+  }
+}

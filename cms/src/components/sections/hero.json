@@ -1,0 +1,51 @@
+{
+  "collectionName": "components_sections_hero",
+  "info": {
+    "displayName": "Hero Section",
+    "description": "Hero banner section with title, description and CTA"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "text"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images", "videos"]
+    },
+    "ctaButtons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.button"
+    },
+    "alignment": {
+      "type": "enumeration",
+      "enum": ["left", "center", "right"],
+      "default": "center"
+    },
+    "height": {
+      "type": "enumeration",
+      "enum": ["small", "medium", "large", "fullscreen"],
+      "default": "large"
+    },
+    "overlay": {
+      "type": "boolean",
+      "default": false
+    },
+    "overlayOpacity": {
+      "type": "integer",
+      "min": 0,
+      "max": 100,
+      "default": 50
+    }
+  }
+}

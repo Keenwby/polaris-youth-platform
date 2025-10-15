@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_shared_button",
+  "info": {
+    "displayName": "Button",
+    "description": "Call-to-action button"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string"
+    },
+    "variant": {
+      "type": "enumeration",
+      "enum": ["default", "secondary", "outline", "ghost", "destructive", "link"],
+      "default": "default"
+    },
+    "size": {
+      "type": "enumeration",
+      "enum": ["sm", "default", "lg"],
+      "default": "default"
+    },
+    "openInNewTab": {
+      "type": "boolean",
+      "default": false
+    },
+    "icon": {
+      "type": "string"
+    }
+  }
+}

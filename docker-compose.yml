@@ -8,9 +8,14 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5433:5432"  # Use different port to avoid conflict
+      - "5432:5432"  # Standard PostgreSQL port
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - polaris_network
 
@@ -30,31 +35,35 @@ services:
       - NODE_ENV=development
       - HOST=0.0.0.0
       - PORT=1337
-      - APP_KEYS=key1,key2,key3,key4
-      - API_TOKEN_SALT=apisalt
-      - ADMIN_JWT_SECRET=adminsecret
-      - TRANSFER_TOKEN_SALT=transfersalt
-      - JWT_SECRET=jwtsecret
+      - APP_KEYS=toBeModified1,toBeModified2,toBeModified3,toBeModified4
+      - API_TOKEN_SALT=toBeModifiedApiTokenSalt
+      - ADMIN_JWT_SECRET=toBeModifiedAdminJwtSecret
+      - TRANSFER_TOKEN_SALT=toBeModifiedTransferTokenSalt
+      - JWT_SECRET=toBeModifiedJwtSecret
     ports:
       - "1337:1337"
     volumes:
       - ./cms:/opt/app
       - /opt/app/node_modules
+      - strapi_uploads:/opt/app/public/uploads
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     networks:
       - polaris_network
 
   frontend:
     build:
-      context: ./frontend  
+      context: ./frontend
       dockerfile: Dockerfile.dev
     container_name: polaris_frontend
     restart: unless-stopped
     environment:
+      - NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
       - NEXT_PUBLIC_STRAPI_API_URL=http://localhost:1337/api
+      - NEXT_PUBLIC_SITE_URL=http://localhost:3000
     ports:
-      - "3001:3000"  # Use different port to avoid conflict
+      - "3000:3000"
     volumes:
       - ./frontend:/opt/app
       - /opt/app/node_modules
@@ -66,6 +75,7 @@ services:
 
 volumes:
   postgres_data:
+  strapi_uploads:
 
 networks:
   polaris_network:

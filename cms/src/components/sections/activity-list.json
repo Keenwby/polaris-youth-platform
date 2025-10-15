@@ -1,0 +1,41 @@
+{
+  "collectionName": "components_sections_activity_list",
+  "info": {
+    "displayName": "Activity List Section",
+    "description": "Display list of activities with filters"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "最新活动"
+    },
+    "description": {
+      "type": "text"
+    },
+    "showFilters": {
+      "type": "boolean",
+      "default": true
+    },
+    "defaultCategory": {
+      "type": "enumeration",
+      "enum": ["all", "workshop", "seminar", "community", "project", "other"],
+      "default": "all"
+    },
+    "itemsPerPage": {
+      "type": "integer",
+      "min": 1,
+      "max": 20,
+      "default": 6
+    },
+    "layout": {
+      "type": "enumeration",
+      "enum": ["grid", "list"],
+      "default": "grid"
+    },
+    "showFeaturedOnly": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

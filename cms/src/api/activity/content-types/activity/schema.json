@@ -1,0 +1,101 @@
+{
+  "kind": "collectionType",
+  "collectionName": "activities",
+  "info": {
+    "singularName": "activity",
+    "pluralName": "activities",
+    "displayName": "Activity",
+    "description": "Youth development activities and events"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "gallery": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "date": {
+      "type": "datetime",
+      "required": true
+    },
+    "endDate": {
+      "type": "datetime"
+    },
+    "location": {
+      "type": "string",
+      "maxLength": 255
+    },
+    "locationUrl": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "capacity": {
+      "type": "integer",
+      "min": 0
+    },
+    "registrationLink": {
+      "type": "string",
+      "maxLength": 500
+    },
+    "registrationDeadline": {
+      "type": "datetime"
+    },
+    "tags": {
+      "type": "json"
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": ["workshop", "seminar", "community", "project", "other"],
+      "default": "other"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["upcoming", "ongoing", "completed", "cancelled"],
+      "default": "upcoming"
+    },
+    "organizers": {
+      "type": "json"
+    },
+    "price": {
+      "type": "decimal",
+      "min": 0,
+      "default": 0
+    },
+    "requirements": {
+      "type": "text"
+    },
+    "benefits": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_shared_feature_item",
+  "info": {
+    "displayName": "Feature Item",
+    "description": "Individual feature or service item"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "link": {
+      "type": "string"
+    },
+    "linkText": {
+      "type": "string",
+      "default": "了解更多"
+    }
+  }
+}
