@@ -10,10 +10,10 @@ export default async function HomePage() {
   try {
     // Fetch home page data from Strapi
     const response = await fetchHomePage();
-    const homePage = response.data;
+    const homePageData = response.data?.attributes;
 
     // If no sections configured, show placeholder
-    if (!homePage?.sections || homePage.sections.length === 0) {
+    if (!homePageData?.sections || homePageData.sections.length === 0) {
       return (
         <main className="min-h-screen p-8 md:p-24 bg-background text-foreground">
           <div className="max-w-4xl mx-auto text-center space-y-6">
@@ -43,7 +43,7 @@ export default async function HomePage() {
     // Render dynamic sections from CMS
     return (
       <main className="min-h-screen bg-background text-foreground">
-        <DynamicZoneRenderer sections={homePage.sections} />
+        <DynamicZoneRenderer sections={homePageData.sections} />
       </main>
     );
   } catch (error) {

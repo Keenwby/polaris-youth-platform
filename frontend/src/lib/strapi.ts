@@ -198,13 +198,8 @@ export function extractAttributesArray<T>(
  */
 export async function fetchActivities(options: FetchOptions = {}) {
   const defaultOptions: FetchOptions = {
-    populate: {
-      featuredImage: "*",
-      seo: {
-        populate: "metaImage",
-      },
-    },
-    sort: ["startDate:desc"],
+    populate: "*",
+    sort: ["date:desc"],
     ...options,
   };
 
@@ -217,12 +212,7 @@ export async function fetchActivities(options: FetchOptions = {}) {
 export async function fetchActivityBySlug(slug: string) {
   const response = await fetchCollection<Activity>("activities", {
     filters: { slug: { $eq: slug } },
-    populate: {
-      featuredImage: "*",
-      seo: {
-        populate: "metaImage",
-      },
-    },
+    populate: "*",
   });
 
   // Return first result or null
@@ -234,24 +224,7 @@ export async function fetchActivityBySlug(slug: string) {
  */
 export async function fetchHomePage() {
   return fetchSingleType<HomePage>("home-page", {
-    populate: {
-      seo: {
-        populate: "metaImage",
-      },
-      sections: {
-        populate: {
-          // Hero section
-          backgroundImage: "*",
-          ctaButtons: "*",
-          // Feature Grid
-          features: {
-            populate: "image",
-          },
-          // Image Gallery
-          images: "*",
-        },
-      },
-    },
+    populate: "*",
   });
 }
 
@@ -260,24 +233,7 @@ export async function fetchHomePage() {
  */
 export async function fetchAboutPage() {
   return fetchSingleType<AboutPage>("about-page", {
-    populate: {
-      seo: {
-        populate: "metaImage",
-      },
-      sections: {
-        populate: {
-          // Hero section
-          backgroundImage: "*",
-          ctaButtons: "*",
-          // Feature Grid
-          features: {
-            populate: "image",
-          },
-          // Image Gallery
-          images: "*",
-        },
-      },
-    },
+    populate: "*",
   });
 }
 
@@ -286,15 +242,6 @@ export async function fetchAboutPage() {
  */
 export async function fetchSiteSettings() {
   return fetchSingleType<SiteSettings>("site-setting", {
-    populate: {
-      siteLogo: "*",
-      favicon: "*",
-      defaultSeo: {
-        populate: "metaImage",
-      },
-      footer: "*",
-      mainNavigation: "*",
-      socialLinks: "*",
-    },
+    populate: "*",
   });
 }

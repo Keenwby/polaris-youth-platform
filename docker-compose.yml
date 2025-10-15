@@ -61,6 +61,8 @@ services:
     environment:
       - NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
       - NEXT_PUBLIC_STRAPI_API_URL=http://localhost:1337/api
+      - STRAPI_URL=http://strapi:1337
+      - STRAPI_API_URL=http://strapi:1337/api
       - NEXT_PUBLIC_SITE_URL=http://localhost:3000
     ports:
       - "3000:3000"

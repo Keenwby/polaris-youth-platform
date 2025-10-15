@@ -27,9 +27,13 @@ export const SOCIAL_LINKS = {
 
 // API Configuration
 export const API_CONFIG = {
-  strapiUrl: process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337",
-  strapiApiUrl:
-    process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337/api",
+  // Server-side uses internal Docker network, client-side uses localhost
+  strapiUrl: (typeof window === 'undefined'
+    ? process.env.STRAPI_URL
+    : process.env.NEXT_PUBLIC_STRAPI_URL) || "http://localhost:1337",
+  strapiApiUrl: (typeof window === 'undefined'
+    ? process.env.STRAPI_API_URL
+    : process.env.NEXT_PUBLIC_STRAPI_API_URL) || "http://localhost:1337/api",
   strapiToken: process.env.STRAPI_API_TOKEN || "",
 } as const;
 

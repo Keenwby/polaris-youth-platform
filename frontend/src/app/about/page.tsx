@@ -10,10 +10,10 @@ export default async function AboutPage() {
   try {
     // Fetch about page data from Strapi
     const response = await fetchAboutPage();
-    const aboutPage = response.data;
+    const aboutPageData = response.data?.attributes;
 
     // If no sections configured, show placeholder
-    if (!aboutPage?.sections || aboutPage.sections.length === 0) {
+    if (!aboutPageData?.sections || aboutPageData.sections.length === 0) {
       return (
         <main className="min-h-screen p-8 md:p-24 bg-background text-foreground">
           <div className="max-w-4xl mx-auto text-center space-y-6">
@@ -43,7 +43,7 @@ export default async function AboutPage() {
     // Render dynamic sections from CMS
     return (
       <main className="min-h-screen bg-background text-foreground">
-        <DynamicZoneRenderer sections={aboutPage.sections} />
+        <DynamicZoneRenderer sections={aboutPageData.sections} />
       </main>
     );
   } catch (error) {
