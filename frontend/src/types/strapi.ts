@@ -226,16 +226,25 @@ export interface AboutPage {
 export interface SiteSettings {
   siteName: string;
   siteDescription?: string;
-  siteLogo?: { data: StrapiEntity<StrapiImage> | null };
+  siteUrl?: string;
+  logo?: { data: StrapiEntity<StrapiImage> | null };
+  siteLogo?: { data: StrapiEntity<StrapiImage> | null }; // alias for compatibility
   favicon?: { data: StrapiEntity<StrapiImage> | null };
   defaultSeo?: SeoMetaData;
   footer?: LayoutFooter;
+  navigation?: {
+    links: {
+      label: string;
+      url: string;
+      openInNewTab?: boolean;
+    }[];
+  }[];
   mainNavigation?: {
     label: string;
     url: string;
     openInNewTab?: boolean;
-  }[];
-  socialLinks?: SocialLink[];
+  }[]; // alias for compatibility
+  socialLinks?: any; // flexible type for different social link formats
   contactEmail?: string;
   contactPhone?: string;
   address?: string;

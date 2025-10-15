@@ -1,5 +1,28 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
+export interface SeoMetaData extends Schema.Component {
+  collectionName: 'components_seo_meta_data';
+  info: {
+    displayName: 'Meta Data';
+    description: 'SEO metadata for pages';
+  };
+  attributes: {
+    metaTitle: Attribute.String &
+      Attribute.SetMinMaxLength<{
+        maxLength: 60;
+      }>;
+    metaDescription: Attribute.Text &
+      Attribute.SetMinMaxLength<{
+        maxLength: 160;
+      }>;
+    keywords: Attribute.Text;
+    metaImage: Attribute.Media<'images'>;
+    metaRobots: Attribute.String & Attribute.DefaultTo<'index, follow'>;
+    structuredData: Attribute.JSON;
+    canonicalUrl: Attribute.String;
+  };
+}
+
 export interface SharedFeatureItem extends Schema.Component {
   collectionName: 'components_shared_feature_item';
   info: {
@@ -37,26 +60,18 @@ export interface SharedButton extends Schema.Component {
   };
 }
 
-export interface SeoMetaData extends Schema.Component {
-  collectionName: 'components_seo_meta_data';
+export interface LayoutFooter extends Schema.Component {
+  collectionName: 'components_layout_footer';
   info: {
-    displayName: 'Meta Data';
-    description: 'SEO metadata for pages';
+    displayName: 'Footer';
+    description: 'Website footer configuration';
   };
   attributes: {
-    metaTitle: Attribute.String &
-      Attribute.SetMinMaxLength<{
-        maxLength: 60;
-      }>;
-    metaDescription: Attribute.Text &
-      Attribute.SetMinMaxLength<{
-        maxLength: 160;
-      }>;
-    keywords: Attribute.Text;
-    metaImage: Attribute.Media<'images'>;
-    metaRobots: Attribute.String & Attribute.DefaultTo<'index, follow'>;
-    structuredData: Attribute.JSON;
-    canonicalUrl: Attribute.String;
+    copyrightText: Attribute.String &
+      Attribute.DefaultTo<'\u00A9 2025 \u5317\u8FB0\u9752\u5E74\u53D1\u5C55\u4E2D\u5FC3. All rights reserved.'>;
+    links: Attribute.JSON & Attribute.DefaultTo<[]>;
+    socialLinks: Attribute.JSON & Attribute.DefaultTo<[]>;
+    additionalInfo: Attribute.RichText;
   };
 }
 
@@ -183,33 +198,18 @@ export interface SectionsActivityList extends Schema.Component {
   };
 }
 
-export interface LayoutFooter extends Schema.Component {
-  collectionName: 'components_layout_footer';
-  info: {
-    displayName: 'Footer';
-    description: 'Website footer configuration';
-  };
-  attributes: {
-    copyrightText: Attribute.String &
-      Attribute.DefaultTo<'\u00A9 2025 \u5317\u8FB0\u9752\u5E74\u53D1\u5C55\u4E2D\u5FC3. All rights reserved.'>;
-    links: Attribute.JSON & Attribute.DefaultTo<[]>;
-    socialLinks: Attribute.JSON & Attribute.DefaultTo<[]>;
-    additionalInfo: Attribute.RichText;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
+      'seo.meta-data': SeoMetaData;
       'shared.feature-item': SharedFeatureItem;
       'shared.button': SharedButton;
-      'seo.meta-data': SeoMetaData;
+      'layout.footer': LayoutFooter;
       'sections.rich-text': SectionsRichText;
       'sections.image-gallery': SectionsImageGallery;
       'sections.hero': SectionsHero;
       'sections.feature-grid': SectionsFeatureGrid;
       'sections.activity-list': SectionsActivityList;
-      'layout.footer': LayoutFooter;
     }
   }
 }

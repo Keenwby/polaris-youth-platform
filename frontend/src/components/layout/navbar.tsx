@@ -19,10 +19,18 @@ export function Navbar({ settings }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const siteName = settings?.siteName || "北辰青年发展中心";
-  const logo = settings?.siteLogo?.data?.attributes?.url
-    ? getMediaUrl(settings.siteLogo.data.attributes.url)
+
+  // Support both logo and siteLogo fields
+  const logoData = settings?.logo?.data || settings?.siteLogo?.data;
+  const logo = logoData?.attributes?.url
+    ? getMediaUrl(logoData.attributes.url)
     : undefined;
-  const navigation = settings?.mainNavigation || [];
+
+  // Support both navigation array structure and mainNavigation
+  const navigation = settings?.mainNavigation ||
+    (settings?.navigation && settings.navigation.length > 0
+      ? settings.navigation[0].links
+      : []);
 
   return (
     <nav className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">

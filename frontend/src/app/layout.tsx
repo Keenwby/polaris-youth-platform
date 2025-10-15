@@ -50,7 +50,7 @@ export default async function RootLayout({
   let settings;
   try {
     const response = await fetchSiteSettings();
-    settings = response.data;
+    settings = response.data?.attributes;
   } catch (error) {
     console.error("Error fetching site settings:", error);
   }
