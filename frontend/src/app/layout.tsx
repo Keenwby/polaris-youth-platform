@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { fetchSiteSettings } from "@/lib/strapi";
+import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -38,14 +41,27 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch site settings for navbar and footer
+  let settings;
+  try {
+    const response = await fetchSiteSettings();
+    settings = response.data;
+  } catch (error) {
+    console.error("Error fetching site settings:", error);
+  }
+
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <Navbar settings={settings} />
+        {children}
+        <Footer footer={settings?.footer} />
+      </body>
     </html>
   );
 }

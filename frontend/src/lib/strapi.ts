@@ -5,6 +5,12 @@
 
 import { API_CONFIG } from "./constants";
 import type { StrapiResponse, StrapiEntity } from "@/types";
+import type {
+  Activity,
+  HomePage,
+  AboutPage,
+  SiteSettings,
+} from "@/types/strapi";
 
 interface FetchOptions {
   filters?: Record<string, any>;
@@ -181,4 +187,114 @@ export function extractAttributesArray<T>(
 ): T[] {
   if (!entities || !Array.isArray(entities)) return [];
   return entities.map((entity) => entity.attributes);
+}
+
+// ============================================================================
+// Content Type Specific API Functions
+// ============================================================================
+
+/**
+ * Fetch all activities with optional filters
+ */
+export async function fetchActivities(options: FetchOptions = {}) {
+  const defaultOptions: FetchOptions = {
+    populate: {
+      featuredImage: "*",
+      seo: {
+        populate: "metaImage",
+      },
+    },
+    sort: ["startDate:desc"],
+    ...options,
+  };
+
+  return fetchCollection<Activity>("activities", defaultOptions);
+}
+
+/**
+ * Fetch a single activity by slug
+ */
+export async function fetchActivityBySlug(slug: string) {
+  const response = await fetchCollection<Activity>("activities", {
+    filters: { slug: { $eq: slug } },
+    populate: {
+      featuredImage: "*",
+      seo: {
+        populate: "metaImage",
+      },
+    },
+  });
+
+  // Return first result or null
+  return response.data?.[0] || null;
+}
+
+/**
+ * Fetch home page with all sections populated
+ */
+export async function fetchHomePage() {
+  return fetchSingleType<HomePage>("home-page", {
+    populate: {
+      seo: {
+        populate: "metaImage",
+      },
+      sections: {
+        populate: {
+          // Hero section
+          backgroundImage: "*",
+          ctaButtons: "*",
+          // Feature Grid
+          features: {
+            populate: "image",
+          },
+          // Image Gallery
+          images: "*",
+        },
+      },
+    },
+  });
+}
+
+/**
+ * Fetch about page with all sections populated
+ */
+export async function fetchAboutPage() {
+  return fetchSingleType<AboutPage>("about-page", {
+    populate: {
+      seo: {
+        populate: "metaImage",
+      },
+      sections: {
+        populate: {
+          // Hero section
+          backgroundImage: "*",
+          ctaButtons: "*",
+          // Feature Grid
+          features: {
+            populate: "image",
+          },
+          // Image Gallery
+          images: "*",
+        },
+      },
+    },
+  });
+}
+
+/**
+ * Fetch site settings (global configuration)
+ */
+export async function fetchSiteSettings() {
+  return fetchSingleType<SiteSettings>("site-setting", {
+    populate: {
+      siteLogo: "*",
+      favicon: "*",
+      defaultSeo: {
+        populate: "metaImage",
+      },
+      footer: "*",
+      mainNavigation: "*",
+      socialLinks: "*",
+    },
+  });
 }

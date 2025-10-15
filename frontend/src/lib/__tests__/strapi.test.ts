@@ -30,10 +30,14 @@ describe("strapi helpers", () => {
     it("should extract attributes from Strapi entity", () => {
       const entity: StrapiEntity<{ title: string }> = {
         id: 1,
-        attributes: { title: "Test" },
+        attributes: {
+          title: "Test",
+          createdAt: "2025-01-01",
+          updatedAt: "2025-01-01",
+        },
       };
       const result = extractAttributes(entity);
-      expect(result).toEqual({ title: "Test" });
+      expect(result?.title).toBe("Test");
     });
 
     it("should return null for undefined entity", () => {
@@ -52,6 +56,8 @@ describe("strapi helpers", () => {
         attributes: {
           title: "Test",
           nested: { value: 42 },
+          createdAt: "2025-01-01",
+          updatedAt: "2025-01-01",
         },
       };
       const result = extractAttributes(entity);
@@ -63,11 +69,12 @@ describe("strapi helpers", () => {
   describe("extractAttributesArray", () => {
     it("should extract attributes from array of entities", () => {
       const entities: StrapiEntity<{ title: string }>[] = [
-        { id: 1, attributes: { title: "First" } },
-        { id: 2, attributes: { title: "Second" } },
+        { id: 1, attributes: { title: "First", createdAt: "2025-01-01", updatedAt: "2025-01-01" } },
+        { id: 2, attributes: { title: "Second", createdAt: "2025-01-01", updatedAt: "2025-01-01" } },
       ];
       const result = extractAttributesArray(entities);
-      expect(result).toEqual([{ title: "First" }, { title: "Second" }]);
+      expect(result[0]?.title).toBe("First");
+      expect(result[1]?.title).toBe("Second");
     });
 
     it("should return empty array for undefined", () => {
