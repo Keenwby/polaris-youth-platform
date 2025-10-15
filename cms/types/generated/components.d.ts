@@ -1,28 +1,5 @@
 import type { Schema, Attribute } from '@strapi/strapi';
 
-export interface SeoMetaData extends Schema.Component {
-  collectionName: 'components_seo_meta_data';
-  info: {
-    displayName: 'Meta Data';
-    description: 'SEO metadata for pages';
-  };
-  attributes: {
-    metaTitle: Attribute.String &
-      Attribute.SetMinMaxLength<{
-        maxLength: 60;
-      }>;
-    metaDescription: Attribute.Text &
-      Attribute.SetMinMaxLength<{
-        maxLength: 160;
-      }>;
-    keywords: Attribute.Text;
-    metaImage: Attribute.Media<'images'>;
-    metaRobots: Attribute.String & Attribute.DefaultTo<'index, follow'>;
-    structuredData: Attribute.JSON;
-    canonicalUrl: Attribute.String;
-  };
-}
-
 export interface SharedFeatureItem extends Schema.Component {
   collectionName: 'components_shared_feature_item';
   info: {
@@ -57,6 +34,29 @@ export interface SharedButton extends Schema.Component {
       Attribute.DefaultTo<'default'>;
     openInNewTab: Attribute.Boolean & Attribute.DefaultTo<false>;
     icon: Attribute.String;
+  };
+}
+
+export interface SeoMetaData extends Schema.Component {
+  collectionName: 'components_seo_meta_data';
+  info: {
+    displayName: 'Meta Data';
+    description: 'SEO metadata for pages';
+  };
+  attributes: {
+    metaTitle: Attribute.String &
+      Attribute.SetMinMaxLength<{
+        maxLength: 60;
+      }>;
+    metaDescription: Attribute.Text &
+      Attribute.SetMinMaxLength<{
+        maxLength: 160;
+      }>;
+    keywords: Attribute.Text;
+    metaImage: Attribute.Media<'images'>;
+    metaRobots: Attribute.String & Attribute.DefaultTo<'index, follow'>;
+    structuredData: Attribute.JSON;
+    canonicalUrl: Attribute.String;
   };
 }
 
@@ -201,9 +201,9 @@ export interface LayoutFooter extends Schema.Component {
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
-      'seo.meta-data': SeoMetaData;
       'shared.feature-item': SharedFeatureItem;
       'shared.button': SharedButton;
+      'seo.meta-data': SeoMetaData;
       'sections.rich-text': SectionsRichText;
       'sections.image-gallery': SectionsImageGallery;
       'sections.hero': SectionsHero;
