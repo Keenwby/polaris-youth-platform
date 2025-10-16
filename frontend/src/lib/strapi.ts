@@ -26,6 +26,46 @@ interface FetchOptions {
 }
 
 /**
+ * Helper function to flatten nested populate objects into dot notation paths
+ * e.g., { sections: { populate: { backgroundImage: "*" } } } -> ["sections.backgroundImage"]
+ */
+function flattenPopulate(obj: any, prefix: string = ""): string[] {
+  const paths: string[] = [];
+
+  if (typeof obj === "string") {
+    // Simple case: populate: "*" or populate: "field"
+    return prefix ? [prefix] : [obj];
+  }
+
+  if (typeof obj === "object" && obj !== null && !Array.isArray(obj)) {
+    Object.entries(obj).forEach(([key, value]) => {
+      if (key === "populate") {
+        // This is a nested populate directive
+        if (typeof value === "string") {
+          // populate: "*" - use current prefix
+          if (prefix) paths.push(prefix);
+        } else if (typeof value === "object") {
+          // populate: { field1: ..., field2: ... }
+          const nestedPaths = flattenPopulate(value, prefix);
+          paths.push(...nestedPaths);
+        }
+      } else {
+        // Regular field name
+        const newPrefix = prefix ? `${prefix}.${key}` : key;
+        if (typeof value === "object" && value !== null) {
+          const nestedPaths = flattenPopulate(value, newPrefix);
+          paths.push(...nestedPaths);
+        } else {
+          paths.push(newPrefix);
+        }
+      }
+    });
+  }
+
+  return paths;
+}
+
+/**
  * Build query string from options
  */
 function buildQueryString(options: FetchOptions = {}): string {
@@ -58,17 +98,19 @@ function buildQueryString(options: FetchOptions = {}): string {
     if (limit) params.append("pagination[limit]", String(limit));
   }
 
-  // Populate
+  // Populate - handle nested objects using dot notation
   if (options.populate) {
     if (typeof options.populate === "string") {
       params.append("populate", options.populate);
     } else if (Array.isArray(options.populate)) {
-      options.populate.forEach((field, index) => {
-        params.append(`populate[${index}]`, field);
+      options.populate.forEach((field) => {
+        params.append("populate", field);
       });
     } else if (typeof options.populate === "object") {
-      Object.entries(options.populate).forEach(([key, value]) => {
-        params.append(`populate[${key}]`, String(value));
+      // Convert nested populate object to dot notation paths
+      const paths = flattenPopulate(options.populate);
+      paths.forEach((path) => {
+        params.append("populate", path);
       });
     }
   }
@@ -162,11 +204,14 @@ export async function fetchSingleType<T>(
 
 /**
  * Helper function to get media URL
+ * Always uses public URL for client-side compatibility
  */
 export function getMediaUrl(url: string): string {
   if (!url) return "";
   if (url.startsWith("http")) return url;
-  return `${API_CONFIG.strapiUrl}${url}`;
+  // Always use public URL for media to ensure client-side hydration matches
+  const publicStrapiUrl = process.env.NEXT_PUBLIC_STRAPI_URL || "http://localhost:1337";
+  return `${publicStrapiUrl}${url}`;
 }
 
 /**
@@ -224,7 +269,21 @@ export async function fetchActivityBySlug(slug: string) {
  */
 export async function fetchHomePage() {
   return fetchSingleType<HomePage>("home-page", {
-    populate: "*",
+    populate: {
+      sections: {
+        populate: {
+          backgroundImage: {
+            populate: "*",
+          },
+          ctaButtons: {
+            populate: "*",
+          },
+          features: {
+            populate: "*",
+          },
+        },
+      },
+    },
   });
 }
 
@@ -233,7 +292,21 @@ export async function fetchHomePage() {
  */
 export async function fetchAboutPage() {
   return fetchSingleType<AboutPage>("about-page", {
-    populate: "*",
+    populate: {
+      sections: {
+        populate: {
+          backgroundImage: {
+            populate: "*",
+          },
+          ctaButtons: {
+            populate: "*",
+          },
+          features: {
+            populate: "*",
+          },
+        },
+      },
+    },
   });
 }
 

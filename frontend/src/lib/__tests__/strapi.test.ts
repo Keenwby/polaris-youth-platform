@@ -143,7 +143,7 @@ describe("strapi helpers", () => {
       expect(callUrl).toMatch(/sort%5B0%5D=date%3Adesc/);
     });
 
-    it("fetchHomePage should use populate=*", async () => {
+    it("fetchHomePage should use nested populate with dot notation", async () => {
       const mockResponse = {
         data: {
           id: 1,
@@ -163,17 +163,16 @@ describe("strapi helpers", () => {
       const { fetchHomePage } = await import("../strapi");
       await fetchHomePage();
 
-      expect(global.fetch).toHaveBeenCalledWith(
-        expect.stringContaining("populate=*"),
-        expect.any(Object)
-      );
-      expect(global.fetch).toHaveBeenCalledWith(
-        expect.stringContaining("home-page"),
-        expect.any(Object)
-      );
+      const callUrl = (global.fetch as any).mock.calls[0][0];
+
+      // Check that nested populate uses dot notation for sections.backgroundImage, etc.
+      expect(callUrl).toContain("populate=sections.backgroundImage");
+      expect(callUrl).toContain("populate=sections.ctaButtons");
+      expect(callUrl).toContain("populate=sections.features");
+      expect(callUrl).toContain("home-page");
     });
 
-    it("fetchAboutPage should use populate=*", async () => {
+    it("fetchAboutPage should use nested populate with dot notation", async () => {
       const mockResponse = {
         data: {
           id: 1,
@@ -193,14 +192,13 @@ describe("strapi helpers", () => {
       const { fetchAboutPage } = await import("../strapi");
       await fetchAboutPage();
 
-      expect(global.fetch).toHaveBeenCalledWith(
-        expect.stringContaining("populate=*"),
-        expect.any(Object)
-      );
-      expect(global.fetch).toHaveBeenCalledWith(
-        expect.stringContaining("about-page"),
-        expect.any(Object)
-      );
+      const callUrl = (global.fetch as any).mock.calls[0][0];
+
+      // Check that nested populate uses dot notation for sections.backgroundImage, etc.
+      expect(callUrl).toContain("populate=sections.backgroundImage");
+      expect(callUrl).toContain("populate=sections.ctaButtons");
+      expect(callUrl).toContain("populate=sections.features");
+      expect(callUrl).toContain("about-page");
     });
 
     it("fetchSiteSettings should use populate=*", async () => {
@@ -265,6 +263,158 @@ describe("strapi helpers", () => {
       // Check that slug filter is in the URL (may have URL encoding or [object Object])
       // The current implementation has a bug with nested filters, but we can verify the slug appears
       expect(callUrl).toContain("slug");
+    });
+  });
+
+  describe("Query string building with nested populate", () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it("should handle simple string populate", async () => {
+      const mockResponse = { data: [] };
+      (global.fetch as any).mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockResponse,
+      });
+
+      const { fetchCollection } = await import("../strapi");
+      await fetchCollection("test", { populate: "*" });
+
+      const callUrl = (global.fetch as any).mock.calls[0][0];
+      expect(callUrl).toContain("populate=*");
+    });
+
+    it("should handle array of populate fields", async () => {
+      const mockResponse = { data: [] };
+      (global.fetch as any).mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockResponse,
+      });
+
+      const { fetchCollection } = await import("../strapi");
+      await fetchCollection("test", { populate: ["field1", "field2"] });
+
+      const callUrl = (global.fetch as any).mock.calls[0][0];
+      expect(callUrl).toContain("populate=field1");
+      expect(callUrl).toContain("populate=field2");
+    });
+
+    it("should convert nested populate object to dot notation", async () => {
+      const mockResponse = { data: [] };
+      (global.fetch as any).mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockResponse,
+      });
+
+      const { fetchCollection } = await import("../strapi");
+      await fetchCollection("test", {
+        populate: {
+          author: {
+            populate: {
+              avatar: "*",
+            },
+          },
+        },
+      });
+
+      const callUrl = (global.fetch as any).mock.calls[0][0];
+      expect(callUrl).toContain("populate=author.avatar");
+    });
+
+    it("should handle multiple nested populate fields", async () => {
+      const mockResponse = { data: [] };
+      (global.fetch as any).mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockResponse,
+      });
+
+      const { fetchCollection } = await import("../strapi");
+      await fetchCollection("test", {
+        populate: {
+          sections: {
+            populate: {
+              backgroundImage: { populate: "*" },
+              ctaButtons: { populate: "*" },
+            },
+          },
+        },
+      });
+
+      const callUrl = (global.fetch as any).mock.calls[0][0];
+      expect(callUrl).toContain("populate=sections.backgroundImage");
+      expect(callUrl).toContain("populate=sections.ctaButtons");
+    });
+
+    it("should handle deeply nested populate", async () => {
+      const mockResponse = { data: [] };
+      (global.fetch as any).mockResolvedValueOnce({
+        ok: true,
+        json: async () => mockResponse,
+      });
+
+      const { fetchCollection } = await import("../strapi");
+      await fetchCollection("test", {
+        populate: {
+          level1: {
+            populate: {
+              level2: {
+                populate: {
+                  level3: "*",
+                },
+              },
+            },
+          },
+        },
+      });
+
+      const callUrl = (global.fetch as any).mock.calls[0][0];
+      expect(callUrl).toContain("populate=level1.level2.level3");
+    });
+  });
+
+  describe("getMediaUrl consistency", () => {
+    const originalEnv = process.env;
+
+    beforeEach(() => {
+      vi.clearAllMocks();
+      process.env = { ...originalEnv };
+    });
+
+    afterEach(() => {
+      process.env = originalEnv;
+    });
+
+    it("should always use NEXT_PUBLIC_STRAPI_URL for consistency", () => {
+      process.env.NEXT_PUBLIC_STRAPI_URL = "http://public-url:1337";
+
+      const relativePath = "/uploads/image.jpg";
+      const result = getMediaUrl(relativePath);
+
+      // Should use the public URL, not check typeof window
+      expect(result).toBe("http://public-url:1337/uploads/image.jpg");
+    });
+
+    it("should use default URL when NEXT_PUBLIC_STRAPI_URL is not set", () => {
+      delete process.env.NEXT_PUBLIC_STRAPI_URL;
+
+      const relativePath = "/uploads/image.jpg";
+      const result = getMediaUrl(relativePath);
+
+      // Should fall back to localhost:1337
+      expect(result).toBe("http://localhost:1337/uploads/image.jpg");
+    });
+
+    it("should not modify URLs that already start with http", () => {
+      const fullUrl = "http://cdn.example.com/image.jpg";
+      const result = getMediaUrl(fullUrl);
+      expect(result).toBe(fullUrl);
+    });
+
+    it("should not modify URLs that already start with https", () => {
+      const fullUrl = "https://cdn.example.com/image.jpg";
+      const result = getMediaUrl(fullUrl);
+      expect(result).toBe(fullUrl);
     });
   });
 });
